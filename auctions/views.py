@@ -3,10 +3,22 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
 from .forms import CreateListingForm
 from .models import AuctionListing, Bid, Comment
+from django.db.models import Count
 
 User = get_user_model()
 
+def categories_view(request):
+    categories = AuctionListing.objects.values('category').annotate(total=Count('id')).exclude(category__isnull=True).exclude(category__exact='')
+    return render(request, "auctions/categories.html", {
+        "categories": categories
+    })
 
+def category_listings_view(request, category_name):
+    listings = AuctionListing.objects.filter(category=category_name, is_active=True)
+    return render(request, "auctions/category_listings.html", {
+        "category": category_name,
+        "listings": listings
+    })
 def index(request):
     active_listings = AuctionListing.objects.filter(is_active=True)
     return render(request, "auctions/index.html", {

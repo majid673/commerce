@@ -1,3 +1,21 @@
 body {
     padding: 10px;
 }
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ccc;
+}
+
+.nav-wrapper .nav-links a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.nav-wrapper .nav-links a:hover {
+    text-decoration: underline;
+}
